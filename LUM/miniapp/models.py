@@ -57,7 +57,6 @@ class Tour(models.Model):
     def __str__(self):
         return f'{self.tour_name} : {self.tour_created_date}'
 
-
 class TourDropDownElements(models.Model):
     tour = models.ForeignKey(
         Tour,
@@ -87,7 +86,6 @@ class TourDropDownElements(models.Model):
 
     def __str__(self):
         return f'{self.tour} : {self.element_name}, {self.element_created_at}'
-
 class Quiz(models.Model):
 
     QUIZ_TYPES = [
@@ -132,7 +130,6 @@ class Question(models.Model):
 
     def __str__(self):
         return f'Вопрос "{self.quiz.quiz_name}" №{self.order}: {self.question_text[:50]}'
-
 
 class AnswerOption(models.Model):
     question = models.ForeignKey(
