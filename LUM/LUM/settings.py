@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'mini_app'
+    'miniapp'
 
 ]
 
@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
-ROOT_URLCONF = 'miniapp.urls'
+ROOT_URLCONF = 'LUM.urls'
 
 TEMPLATES = [
     {
