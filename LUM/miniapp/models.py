@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.core.validators import MinLengthValidator, FileExtensionValidator
+from django.core.validators import MinLengthValidator, FileExtensionValidator, ValidationError
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -150,3 +150,57 @@ class AnswerOption(models.Model):
     def __str__(self):
         return f'{self.question} - {self.option_text} {"✓" if self.is_correct else "x"}'
 
+class Story(models.Model):
+    STORY_TYPE = [
+        ('text', 'Текст'),
+        ('image', 'Изображение'),
+        ('video', 'Видео'),
+    ]
+    title = models.CharField(max_length=30)
+    name = models.CharField(max_length=50,)
+    story_type = models.CharField(
+        max_length=10, choices=STORY_TYPE, default='text',verbose_name='Тип медиа'
+    )
+    content_video = models.FileField(
+        upload_to='story_media/videos',
+        validators=[FileExtensionValidator(
+            allowed_extensions=[
+                'mp4', 'mov', 'avi'
+            ]
+        )],
+        verbose_name='Видео',
+        blank=True,
+        null=True,
+    )
+    content_image = models.ImageField(upload_to='story_media/photos')
+    content_text = models.TextField(max_length=100,
+                                    blank=True,
+                                    null=True,
+                                    default='Текст истории',
+                                    help_text='Текст истории (можно оставить путсым)')
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name='Статус истории',
+        help_text='Определяет активна история для пользваотеля или нет'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Дата создания'
+    )
+    expires_at = models.DateTimeField(
+        verbose_name='Дата истечения',
+        help_text='Когда сторис автоматически станет неактивной'
+    )
+    class Meta:
+        verbose_name = "История"
+        verbose_name_plural = 'Истории'
+    def clean(self):
+
+        if self.story_type == 'content_image' and not self.image:
+            raise ValidationError('Для типа "изображение" необходимо загрузить изображение')
+        if self.story_type == 'content_video' and not self.video:
+            raise ValidationError('Для типа "видео" необходимо загрузить видео')
+        if self.story_type == 'content_text' and not self.content:
+            raise ValidationError('Для типа "текст" необходимо заполнить содержание')
+    def __str__(self):
+        return f'{self.name}, {self.created_at}-{self.expires_at}'
