@@ -20,3 +20,9 @@ class StoryList(ListView):
     ordering = 'created_at'
     context_object_name = 'story'
     template_name = 'story.html'
+
+class TourDropDownElementsListView(ListView):
+    model = TourDropDownElements
+    ordering = 'element_created_at'
+    context_object_name = 'drop_down_el'
+    template_name = 'tour_detail.html'

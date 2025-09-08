@@ -1,0 +1,20 @@
+{% extends 'default.html' %}
+
+{% block content %}
+
+{% block tour_detail %}
+
+{% if tour %}
+
+    {{tour.tour_name}}
+    {{tour.tour_description}}
+
+    {% if {{tour.tour_img}} %}
+        {{tour.tour_img}}
+    {% endif %}
+
+{% endif %}
+
+{%endblock%}
+
+{%endblock content%}

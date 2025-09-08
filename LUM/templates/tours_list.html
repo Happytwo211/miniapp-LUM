@@ -3,15 +3,20 @@
 {% block content %}
 
 {% block tours_list %}
+
 {% if tours %}
+
     {% for tour in tours %}
-        {% tour.tour_name %}
-        {% tour.tour_description %}
-        {% tour.tour_content_type %}
-        {% tour.tour_img %}
+        {{ tour.tour_name }}
+        {{ tour.tour_description }}
+        {{ tour.tour_content_type }}
+        {{ tour.tour_img }}
+    {% endfor %}
+
 {% else %}
     Экскурсий пока нет
-{% endfor %}
 {% endif %}
-{% endblock %}
-{% endblock content  %}
+
+{% endblock tours_list %}
+
+{% endblock content %}
