@@ -15,4 +15,8 @@ class TourDetail(DetailView):
     template_name = 'tour_detail.html'
     context_object_name = 'tour'
 
-
+class StoryList(ListView):
+    model = Story
+    ordering = 'created_at'
+    context_object_name = 'story'
+    template_name = 'story.html'

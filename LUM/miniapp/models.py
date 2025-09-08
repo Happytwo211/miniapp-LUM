@@ -5,6 +5,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # Create your models here.
+
+
 class Profile(models.Model):
     user = models.OneToOneField(
         User,
@@ -37,7 +39,7 @@ class Tour(models.Model):
     tour_description = models.TextField(verbose_name='Описание экскурсии',
                                         validators=[MinLengthValidator(10,
                                         message='Минимальная длина описания - 10 символов')])
-
+    tour_img = models.ImageField(upload_to='tours_media/tours_img', null=True, blank=True)
     tour_content_type = models.CharField(default='Экскурсия', editable=False, max_length=10)
     tour_created_time = models.TimeField(auto_now=True, verbose_name='Время создания')
     tour_created_date = models.DateField(auto_now_add=True, verbose_name='Дата создания')
@@ -194,6 +196,7 @@ class Story(models.Model):
     class Meta:
         verbose_name = "История"
         verbose_name_plural = 'Истории'
+        ordering = ['created_at']
     def clean(self):
 
         if self.story_type == 'content_image' and not self.image:
