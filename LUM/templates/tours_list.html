@@ -1,0 +1,17 @@
+{% extends 'default.html' %}
+
+{% block content %}
+
+{% block tours_list %}
+{% if tours %}
+    {% for tour in tours %}
+        {% tour.tour_name %}
+        {% tour.tour_description %}
+        {% tour.tour_content_type %}
+        {% tour.tour_img %}
+{% else %}
+    Экскурсий пока нет
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% endblock content  %}
