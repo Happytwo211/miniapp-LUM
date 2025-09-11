@@ -3,17 +3,7 @@
     <p>{{ tour.tour_description }}</p>
     {% if tour.tour_img %}
         <img src="{{ tour.tour_img.url }}" alt="{{ tour.tour_name }}">
-
-    {% endif %}
-
-    <h3>Элементы экскурсии:</h3>
-    {% if tour.drop_down_elements.all %}
-        <ul>
-        {% for el in tour.drop_down_elements.all %}
-            <li>{{ el.element_name }}</li>
-        {% endfor %}
-        </ul>
     {% else %}
-        <p>Элементов нет</p>
+        Изображения нет
     {% endif %}
 {% endfor %}

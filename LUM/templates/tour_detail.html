@@ -1,35 +1,32 @@
 {% extends 'default.html' %}
-
 {% block content %}
 
-{% block tour_detail %}
+  {% block tour_detail %}
+    {% if tour %}
+      <h2>{{ tour.tour_name }}</h2>
+      <p>{{ tour.tour_description }}</p>
 
-{% if tour %}
-
-    {{tour.tour_name}}
-    {{tour.tour_description}}
-
-    {% if tour.tour_img %}
-        {{tour.tour_img}}
+      {% if tour.tour_img %}
+        <img src="{{ tour.tour_img.url }}" alt="{{ tour.tour_name }}">
+      {% endif %}
     {% endif %}
+  {% endblock %}
 
-{% endif %}
+  {% block drop_down %}
+    <p>Количество элементов: {{ tour.drop_down_elements.count }} Отладка </p>
 
-{%endblock%}
+    {% for el in tour.drop_down_elements.all %}
+      <p>{{ el.element_name }}</p>
+      <p>{{ el.element_description }}</p>
+      <img src="{{ el.element_icon.url }}" alt="Изображение недоступно">
+      <img src="{{ el.element_img.url }}" alt="Изображение недоступно">
+      <video width="640" height="360" controls>
+        <source src="{{ el.element_video.url }}" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+      </video>
+    {% empty %}
+      <p>Элементов нет</p>
+    {% endfor %}
+  {%endblock%}
 
-{% block dropdown %}
-    {% if drop_down_el %}
-        {% for el in drop_down_el %}
-
-        {{ el.element_name}}
-
-        {% endfor %}
-
-    {% else %}
-
-        Элементов нет
-
-    {% endif %}
-
-{% endblock %}
-{%endblock content%}
+{% endblock content %}
