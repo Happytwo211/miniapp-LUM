@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>LUM</title>
+
+    <!-- Подключение CSS -->
+    <link rel="stylesheet" href="{% static 'miniapp/css/stories.css' %}">
+</head>
+<body>
+
+<!-- Блок сторис -->
+<div class="stories-container">
+    {% for story in stories %}
+        <div class="story" onclick="openStory({{ forloop.counter0 }})">
+            {% if story.story_type == 'image' %}
+                <img src="{{ story.content_image.url }}" alt="{{ story.title }}">
+
+            {% elif story.story_type == 'video' %}
+                <!-- показываем картинку-превью для видео -->
+                <img src="{{ story.content_image.url }}"
+                     alt="{{ story.title }}"
+                     data-video="{{ story.content_video.url }}">
+
+            {% elif story.story_type == 'text' %}
+                <div class="story-text-preview">
+                    {{ story.title|truncatechars:10 }}
+                </div>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>Историй пока нет</p>
+    {% endfor %}
+</div>
+
+<!-- Модалка -->
+<div id="storyModal" class="modal">
+    <span class="close-btn" onclick="closeStory()">&times;</span>
+    <div class="modal-content" id="modalContent"></div>
+    <span class="nav-arrow left" onclick="prevStory()">&#10094;</span>
+    <span class="nav-arrow right" onclick="nextStory()">&#10095;</span>
+</div>
+
+<!-- Блоки наследования -->
+{% block stories %}{% endblock %}
+{% block tours_list %}{% endblock %}
+{% block tour_detail %}{% endblock %}
+{% block drop_down %}{% endblock %}
+
+<!-- Подключение JS -->
+<script src="{% static 'miniapp/js/stories.js' %}"></script>
+</body>
+</html>

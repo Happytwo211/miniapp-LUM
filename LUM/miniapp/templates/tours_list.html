@@ -1,3 +1,5 @@
+{% extends 'default.html'%}
+{% block tours_list %}
 {% for tour in tours %}
     <a style="text-decoration: none;" href="/tour/{{tour.id}}">{{ tour.tour_name }}</a>
     <p>{{ tour.tour_description }}</p>
@@ -7,3 +9,4 @@
         Изображения нет
     {% endif %}
 {% endfor %}
+{% endblock %}

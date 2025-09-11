@@ -193,13 +193,14 @@ class Story(models.Model):
         verbose_name = "История"
         verbose_name_plural = 'Истории'
         ordering = ['created_at']
-    def clean(self):
 
-        if self.story_type == 'content_image' and not self.image:
-            raise ValidationError('Для типа "изображение" необходимо загрузить изображение')
-        if self.story_type == 'content_video' and not self.video:
-            raise ValidationError('Для типа "видео" необходимо загрузить видео')
-        if self.story_type == 'content_text' and not self.content:
-            raise ValidationError('Для типа "текст" необходимо заполнить содержание')
+    def clean(self):
+        if self.story_type == 'image' and not self.content_image:
+            raise ValidationError('Для типа "Изображение" необходимо загрузить изображение')
+        if self.story_type == 'video' and not self.content_video:
+            raise ValidationError('Для типа "Видео" необходимо загрузить видео')
+        if self.story_type == 'text' and not self.content_text:
+            raise ValidationError('Для типа "Текст" необходимо заполнить содержание')
+
     def __str__(self):
         return f'{self.name}, {self.created_at}-{self.expires_at}'
