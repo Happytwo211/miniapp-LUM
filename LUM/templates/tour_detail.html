@@ -9,7 +9,7 @@
     {{tour.tour_name}}
     {{tour.tour_description}}
 
-    {% if {{tour.tour_img}} %}
+    {% if tour.tour_img %}
         {{tour.tour_img}}
     {% endif %}
 
@@ -17,4 +17,19 @@
 
 {%endblock%}
 
+{% block dropdown %}
+    {% if drop_down_el %}
+        {% for el in drop_down_el %}
+
+        {{ el.element_name}}
+
+        {% endfor %}
+
+    {% else %}
+
+        Элементов нет
+
+    {% endif %}
+
+{% endblock %}
 {%endblock content%}

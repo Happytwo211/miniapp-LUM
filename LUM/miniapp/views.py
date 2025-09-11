@@ -18,11 +18,11 @@ class TourDetail(DetailView):
 class StoryList(ListView):
     model = Story
     ordering = 'created_at'
-    context_object_name = 'story'
+    context_object_name = 'stories'
     template_name = 'story.html'
 
 class TourDropDownElementsListView(ListView):
     model = TourDropDownElements
     ordering = 'element_created_at'
     context_object_name = 'drop_down_el'
-    template_name = 'tour_detail.html'
+    template_name = 'tours_list.html'

@@ -51,10 +51,6 @@ class Tour(models.Model):
         verbose_name = 'Экскурсия'
         verbose_name_plural = 'Экскурсии'
         ordering = ['-tour_created_date']
-        # permissions = [
-        # ('can_publish', 'Может публиковать туры'),
-        # ('can_archive', 'Может архивировать туры'),]
-        #
 
     def __str__(self):
         return f'{self.tour_name} : {self.tour_created_date}'

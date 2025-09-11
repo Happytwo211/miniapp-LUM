@@ -1,22 +1,19 @@
-{% extends 'default.html' %}
+{% for tour in tours %}
+    <a style="text-decoration: none;" href="/tour/{{tour.id}}">{{ tour.tour_name }}</a>
+    <p>{{ tour.tour_description }}</p>
+    {% if tour.tour_img %}
+        <img src="{{ tour.tour_img.url }}" alt="{{ tour.tour_name }}">
 
-{% block content %}
+    {% endif %}
 
-{% block tours_list %}
-
-{% if tours %}
-
-    {% for tour in tours %}
-        {{ tour.tour_name }}
-        {{ tour.tour_description }}
-        {{ tour.tour_content_type }}
-        {{ tour.tour_img }}
-    {% endfor %}
-
-{% else %}
-    Экскурсий пока нет
-{% endif %}
-
-{% endblock tours_list %}
-
-{% endblock content %}
+    <h3>Элементы экскурсии:</h3>
+    {% if tour.drop_down_elements.all %}
+        <ul>
+        {% for el in tour.drop_down_elements.all %}
+            <li>{{ el.element_name }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Элементов нет</p>
+    {% endif %}
+{% endfor %}
