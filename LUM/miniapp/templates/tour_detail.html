@@ -6,6 +6,9 @@
 <script src="{% static 'miniapp/js/tour_detail.js' %}" defer></script>
 
 <div class="tour-detail-container">
+    <!-- 🔙 Кнопка назад -->
+    <button class="back-button" onclick="window.history.back()">&#8592;</button>
+
     <!-- Верхний блок: картинка и название -->
     <div class="tour-header">
         {% if tour.tour_img %}

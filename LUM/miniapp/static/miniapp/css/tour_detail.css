@@ -1,12 +1,43 @@
 /* ====== Стили страницы экскурсии ====== */
 
 .tour-detail-container {
-    max-width: 600px; /* 🔥 теперь совпадает со stories */
+    max-width: 600px; /* 🔥 совпадает со stories */
     margin: 20px auto;
     padding: 15px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+/* 🔙 Кнопка назад */
+.back-button {
+    align-self: flex-start; /* выравнивание по левому краю */
+    background: #fff;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px; /* 🔥 немного отступа от блока */
+}
+
+.back-button:hover {
+    background: #f0f0f0;
+    color: #d62828; /* 🔴 стрелочка становится красной */
+}
+
+.back-button:active {
+    background: #e0e0e0;
+    color: #d62828;
+    transform: scale(0.95);
 }
 
 /* Заголовок экскурсии */

@@ -12,3 +12,12 @@ function toggleElement(header) {
         content.style.display = "block";
     }
 }
+
+// 🔙 Функция возврата
+function handleBack() {
+    if (document.referrer) {
+        history.back();
+    } else {
+        window.location.href = "/tours/"; // замени на свой url
+    }
+}
