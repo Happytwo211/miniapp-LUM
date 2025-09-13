@@ -1,12 +1,42 @@
-{% extends 'default.html'%}
+{% extends 'default.html' %}
+{% load static %}
+
 {% block tours_list %}
-{% for tour in tours %}
-    <a style="text-decoration: none;" href="/tour/{{tour.id}}">{{ tour.tour_name }}</a>
-    <p>{{ tour.tour_description }}</p>
-    {% if tour.tour_img %}
-        <img src="{{ tour.tour_img.url }}" alt="{{ tour.tour_name }}">
-    {% else %}
-        Изображения нет
+<link rel="stylesheet" href="{% static 'miniapp/css/tours.css' %}">
+
+<div class="tours-container">
+    {% for tour in tours %}
+        <div class="tour-card">
+            <a href="{% url 'tour-detail' tour.pk %}" class="tour-link">
+                {% if tour.tour_img %}
+                    <img src="{{ tour.tour_img.url }}" alt="{{ tour.tour_name }}" class="tour-img">
+                {% else %}
+                    <div class="tour-placeholder">Нет изображения</div>
+                {% endif %}
+                <div class="tour-info">
+                    <span class="tour-type">{{ tour.tour_content_type }}</span>
+                    <h2 class="tour-title">{{ tour.tour_name }}</h2>
+                    <p class="tour-description">{{ tour.tour_description|truncatechars:120 }}</p>
+                </div>
+            </a>
+        </div>
+    {% empty %}
+        <p class="no-tours">Экскурсий пока нет</p>
+    {% endfor %}
+</div>
+
+<!-- Пагинация -->
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page=1" class="page-link">« Первая</a>
+        <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Назад</a>
     {% endif %}
-{% endfor %}
+
+    <span class="current-page gray-text">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="page-link">Вперёд</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">Последняя »</a>
+    {% endif %}
+</div>
 {% endblock %}

@@ -1,0 +1,122 @@
+/* ====== Стили экскурсий (tours_list) ====== */
+
+/* Контейнер для всех карточек */
+.tours-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    padding: 20px;
+}
+
+/* Карточка экскурсии */
+.tour-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    max-width: 600px;
+    width: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tour-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Ссылка-картинка + название */
+.tour-link {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Картинка экскурсии */
+.tour-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+}
+
+/* Заглушка вместо изображения */
+.tour-placeholder {
+    width: 100%;
+    height: 300px;
+    background: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 16px;
+}
+
+/* Информация */
+.tour-info {
+    padding: 15px 20px 20px;
+    text-align: center;
+}
+
+.tour-type {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #ff5555;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.tour-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 8px 0;
+    color: #333;
+}
+
+.tour-description {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Сообщение "нет экскурсий" */
+.no-tours {
+    text-align: center;
+    color: #777;
+    font-size: 16px;
+    margin-top: 40px;
+}
+
+/* Пагинация */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 30px 0;
+    font-size: 14px;
+}
+
+.page-link {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: #f8f8f8;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.page-link:hover {
+    background: #ff5555;
+    color: #fff;
+}
+
+.current-page {
+    font-weight: bold;
+    color: #888; /* теперь серая */
+}

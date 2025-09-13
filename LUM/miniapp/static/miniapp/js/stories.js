@@ -3,6 +3,7 @@ let stories = [];
 let progressTimer = null;
 let isPaused = false;
 let duration = 5000; // стандартное время для картинок/текста
+let currentVideo = null; // ссылка на текущее видео
 
 // Открыть сторис
 function openStory(index) {
@@ -27,6 +28,7 @@ function closeStory() {
         video.currentTime = 0;
     });
 
+    currentVideo = null;
     modal.style.display = "none";
     modalContent.innerHTML = "";
     document.getElementById("progressContainer").innerHTML = "";
@@ -37,6 +39,7 @@ function showStory(index) {
     const modalContent = document.getElementById("modalContent");
 
     modalContent.innerHTML = "";
+    currentVideo = null;
 
     let story = stories[index];
 
@@ -62,6 +65,8 @@ function showStory(index) {
         };
 
         video.onended = () => nextStory();
+
+        currentVideo = video; // сохраняем активное видео
 
         // Отмечаем просмотренной
         story.classList.add("viewed");
@@ -146,8 +151,14 @@ function prevStory() {
 }
 
 // Пауза при удержании
-function pauseStory() { isPaused = true; }
-function resumeStory() { isPaused = false; }
+function pauseStory() {
+    isPaused = true;
+    if (currentVideo) currentVideo.pause();
+}
+function resumeStory() {
+    isPaused = false;
+    if (currentVideo) currentVideo.play();
+}
 
 // Навешиваем слушатели
 document.addEventListener("mousedown", pauseStory);
