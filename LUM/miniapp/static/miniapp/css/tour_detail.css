@@ -1,0 +1,114 @@
+/* ====== Стили страницы экскурсии ====== */
+
+.tour-detail-container {
+    max-width: 600px; /* 🔥 теперь совпадает со stories */
+    margin: 20px auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Заголовок экскурсии */
+.tour-header {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    text-align: center;
+}
+
+.tour-header-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+}
+
+.tour-header-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 15px 0 5px;
+    color: #333;
+}
+
+.tour-header-description {
+    font-size: 16px;
+    color: #666;
+    padding: 0 15px 15px;
+}
+
+/* Элементы экскурсии */
+.tour-elements {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tour-element {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+.tour-element-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    cursor: pointer;
+    background: #fafafa;
+    border-bottom: 1px solid #eee;
+}
+
+.tour-element-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+}
+
+.tour-element-icon-placeholder {
+    font-size: 24px;
+    margin-right: 12px;
+}
+
+.tour-element-title {
+    flex-grow: 1;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    text-align: left;
+}
+
+.tour-element-arrow {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+/* При открытии поворачиваем стрелку */
+.tour-element-header.active .tour-element-arrow {
+    transform: rotate(180deg);
+}
+
+/* Скрытый контент */
+.tour-element-content {
+    display: none;
+    padding: 14px 20px;
+    font-size: 15px;
+    color: #555;
+    text-align: left;
+}
+
+.tour-element-content img,
+.tour-element-content video {
+    max-width: 100%;
+    margin-top: 12px;
+    border-radius: 10px;
+}
+
+.no-elements {
+    text-align: center;
+    color: #888;
+    margin-top: 20px;
+}

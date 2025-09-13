@@ -1,32 +1,52 @@
 {% extends 'default.html' %}
-{% block content %}
+{% load static %}
 
-  {% block tour_detail %}
-    {% if tour %}
-      <h2>{{ tour.tour_name }}</h2>
-      <p>{{ tour.tour_description }}</p>
+{% block tour_detail %}
+<link rel="stylesheet" href="{% static 'miniapp/css/tour_detail.css' %}">
+<script src="{% static 'miniapp/js/tour_detail.js' %}" defer></script>
 
-      {% if tour.tour_img %}
-        <img src="{{ tour.tour_img.url }}" alt="{{ tour.tour_name }}">
-      {% endif %}
-    {% endif %}
-  {% endblock %}
+<div class="tour-detail-container">
+    <!-- Верхний блок: картинка и название -->
+    <div class="tour-header">
+        {% if tour.tour_img %}
+            <img src="{{ tour.tour_img.url }}" alt="{{ tour.tour_name }}" class="tour-header-img">
+        {% endif %}
+        <h1 class="tour-header-title">{{ tour.tour_name }}</h1>
+        <p class="tour-header-description">{{ tour.tour_description }}</p>
+    </div>
 
-  {% block drop_down %}
-    <p>Количество элементов: {{ tour.drop_down_elements.count }} Отладка </p>
+    <!-- Элементы экскурсии -->
+    <div class="tour-elements">
+        {% for element in tour.drop_down_elements.all %}
+        <div class="tour-element">
+            <div class="tour-element-header" onclick="toggleElement(this)">
+                {% if element.element_icon %}
+                    <img src="{{ element.element_icon.url }}" alt="icon" class="tour-element-icon">
+                {% else %}
+                    <span class="tour-element-icon-placeholder">📍</span>
+                {% endif %}
+                <span class="tour-element-title">{{ element.element_name }}</span>
+                <span class="tour-element-arrow">&#9660;</span>
+            </div>
 
-    {% for el in tour.drop_down_elements.all %}
-      <p>{{ el.element_name }}</p>
-      <p>{{ el.element_description }}</p>
-      <img src="{{ el.element_icon.url }}" alt="Изображение недоступно">
-      <img src="{{ el.element_img.url }}" alt="Изображение недоступно">
-      <video width="640" height="360" controls>
-        <source src="{{ el.element_video.url }}" type="video/mp4">
-        Ваш браузер не поддерживает видео.
-      </video>
-    {% empty %}
-      <p>Элементов нет</p>
-    {% endfor %}
-  {%endblock%}
-
-{% endblock content %}
+            <div class="tour-element-content">
+                {% if element.element_description %}
+                    <p>{{ element.element_description }}</p>
+                {% endif %}
+                {% if element.element_img %}
+                    <img src="{{ element.element_img.url }}" alt="{{ element.element_name }}" class="tour-element-img">
+                {% endif %}
+                {% if element.element_video %}
+                    <video controls class="tour-element-video">
+                        <source src="{{ element.element_video.url }}" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+            <p class="no-elements">Элементов экскурсии пока нет</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
