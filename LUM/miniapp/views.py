@@ -1,4 +1,5 @@
-from django.views.generic import DetailView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, ListView, UpdateView
 from .models import *
 
 
@@ -27,7 +28,15 @@ class TourDropDownElementsListView(ListView):
     context_object_name = 'drop_down_el'
     template_name = 'tours_list.html'
 
-class ProfieDetail(DetailView):
+class ProfileDetail(DetailView):
     model = Profile
     context_object_name = 'profile'
     template_name = 'profile.html'
+
+class ProfileUpdate(UpdateView):
+    model = Profile
+    fields = ['first_name', 'last_name', 'phone_number']
+    template_name = 'profile_edit.html'
+
+    def get_success_url(self):
+        return reverse_lazy('profile', kwargs={'pk': self.object.pk})

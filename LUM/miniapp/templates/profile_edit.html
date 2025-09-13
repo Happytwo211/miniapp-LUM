@@ -1,0 +1,19 @@
+{% extends 'default.html' %}
+{% load static %}
+
+{% block tour_detail %}
+<link rel="stylesheet" href="{% static 'miniapp/css/profile.css' %}">
+
+<div class="profile-container">
+    <a href="{% url 'profile' object.pk %}" class="back-btn">←</a>
+
+    <div class="profile-header">
+        <h1 class="profile-name">Редактировать профиль</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save-btn">Сохранить</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
