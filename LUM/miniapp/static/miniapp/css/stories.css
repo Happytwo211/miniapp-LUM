@@ -5,8 +5,8 @@
     padding: 10px;
     overflow-x: auto;
     background: #f8f8f8;
-    margin-top: 10px;    /* 🔥 отступ сверху */
-    margin-bottom: 20px; /* 🔥 отступ снизу */
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 /* Каждая история */
@@ -15,13 +15,19 @@
     height: 60px;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid #ffcc00;
+    border: 2px solid #ff7f7f; /* 🔥 светло-красный */
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #fff;
     flex-shrink: 0;
+    transition: border-color 0.3s ease;
+}
+
+/* Просмотренные истории */
+.story.viewed {
+    border-color: #ccc; /* 🔥 серый */
 }
 
 .story img {
@@ -43,6 +49,31 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+
+/* Прогресс-бар */
+.progress-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    height: 4px;
+    gap: 5px;
+}
+
+.progress-bar {
+    flex: 1;
+    background: rgba(255,255,255,0.3);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0;
+    background: #ffcc00;
+    transition: width 0.1s linear;
 }
 
 /* Контент модалки */
