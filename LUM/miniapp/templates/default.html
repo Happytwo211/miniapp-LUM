@@ -10,26 +10,28 @@
 <body>
 
 <!-- Блок сторис -->
-<div class="stories-container">
-    {% for story in stories %}
-        <div class="story" onclick="openStory({{ forloop.counter0 }})">
-            {% if story.story_type == 'image' %}
-                <img src="{{ story.content_image.url }}" alt="{{ story.title }}">
+<div class="stories-wrapper">
+    <div class="stories-container">
+        {% for story in stories %}
+            <div class="story" onclick="openStory({{ forloop.counter0 }})">
+                {% if story.story_type == 'image' %}
+                    <img src="{{ story.content_image.url }}" alt="{{ story.title }}">
 
-            {% elif story.story_type == 'video' %}
-                <img src="{{ story.content_image.url }}"
-                     alt="{{ story.title }}"
-                     data-video="{{ story.content_video.url }}">
+                {% elif story.story_type == 'video' %}
+                    <img src="{{ story.content_image.url }}"
+                         alt="{{ story.title }}"
+                         data-video="{{ story.content_video.url }}">
 
-            {% elif story.story_type == 'text' %}
-                <div class="story-text-preview">
-                    {{ story.title|truncatechars:10 }}
-                </div>
-            {% endif %}
-        </div>
-    {% empty %}
-        <p>Историй пока нет</p>
-    {% endfor %}
+                {% elif story.story_type == 'text' %}
+                    <div class="story-text-preview">
+                        {{ story.title|truncatechars:10 }}
+                    </div>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>Историй пока нет</p>
+        {% endfor %}
+    </div>
 </div>
 
 <!-- Модалка -->

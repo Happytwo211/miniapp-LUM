@@ -3,13 +3,14 @@ let stories = [];
 let progressTimer = null;
 let isPaused = false;
 let duration = 5000; // стандартное время для картинок/текста
-let currentVideo = null; // ссылка на текущее видео
 
 // Открыть сторис
 function openStory(index) {
     currentIndex = index;
     stories = document.querySelectorAll(".story");
-    document.getElementById("storyModal").style.display = "flex";
+    const modal = document.getElementById("storyModal");
+
+    modal.classList.add("show");
     renderProgressBars();
     showStory(currentIndex);
 }
@@ -25,11 +26,11 @@ function closeStory() {
     const videos = modalContent.querySelectorAll("video");
     videos.forEach(video => {
         video.pause();
-        video.currentTime = 0;
+        video.src = ""; // очищаем источник
+        video.load();
     });
 
-    currentVideo = null;
-    modal.style.display = "none";
+    modal.classList.remove("show");
     modalContent.innerHTML = "";
     document.getElementById("progressContainer").innerHTML = "";
 }
@@ -37,9 +38,7 @@ function closeStory() {
 // Показать текущий сторис
 function showStory(index) {
     const modalContent = document.getElementById("modalContent");
-
     modalContent.innerHTML = "";
-    currentVideo = null;
 
     let story = stories[index];
 
@@ -65,8 +64,6 @@ function showStory(index) {
         };
 
         video.onended = () => nextStory();
-
-        currentVideo = video; // сохраняем активное видео
 
         // Отмечаем просмотренной
         story.classList.add("viewed");
@@ -153,11 +150,24 @@ function prevStory() {
 // Пауза при удержании
 function pauseStory() {
     isPaused = true;
-    if (currentVideo) currentVideo.pause();
+
+    // Остановить текущее видео
+    const modalContent = document.getElementById("modalContent");
+    const video = modalContent.querySelector("video");
+    if (video && !video.paused) {
+        video.pause();
+    }
 }
+
 function resumeStory() {
     isPaused = false;
-    if (currentVideo) currentVideo.play();
+
+    // Запустить текущее видео
+    const modalContent = document.getElementById("modalContent");
+    const video = modalContent.querySelector("video");
+    if (video && video.paused) {
+        video.play();
+    }
 }
 
 // Навешиваем слушатели

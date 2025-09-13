@@ -1,6 +1,5 @@
 /* ====== Стили экскурсий (tours_list) ====== */
 
-/* Контейнер для всех карточек */
 .tours-container {
     display: flex;
     flex-direction: column;
@@ -28,7 +27,6 @@
     box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
-/* Ссылка-картинка + название */
 .tour-link {
     display: block;
     width: 100%;
@@ -36,7 +34,6 @@
     color: inherit;
 }
 
-/* Картинка экскурсии */
 .tour-img {
     width: 100%;
     height: 300px;
@@ -44,7 +41,6 @@
     border-bottom: 1px solid #eee;
 }
 
-/* Заглушка вместо изображения */
 .tour-placeholder {
     width: 100%;
     height: 300px;
@@ -56,18 +52,24 @@
     font-size: 16px;
 }
 
-/* Информация */
 .tour-info {
     padding: 15px 20px 20px;
-    text-align: center;
+    text-align: left; /* ✅ теперь выравнивание по левому краю */
 }
 
+/* Метка "Экскурсия" */
 .tour-type {
     font-size: 12px;
     text-transform: uppercase;
-    color: #ff5555;
-    font-weight: bold;
+    color: #888; /* ✅ серый */
+    font-weight: 600;
     letter-spacing: 1px;
+    border: 1px solid #888; /* ✅ обводка */
+    border-radius: 20px; /* ✅ овал */
+    padding: 4px 10px;
+    display: inline-block;
+    background: transparent; /* ✅ без фона */
+    margin-bottom: 8px;
 }
 
 .tour-title {
@@ -84,7 +86,6 @@
     margin-bottom: 15px;
 }
 
-/* Сообщение "нет экскурсий" */
 .no-tours {
     text-align: center;
     color: #777;
@@ -100,6 +101,7 @@
     gap: 12px;
     margin: 30px 0;
     font-size: 14px;
+    color: #888;
 }
 
 .page-link {
@@ -118,5 +120,5 @@
 
 .current-page {
     font-weight: bold;
-    color: #888; /* теперь серая */
+    color: #444;
 }

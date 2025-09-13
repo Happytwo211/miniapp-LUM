@@ -5,8 +5,8 @@
     padding: 10px;
     overflow-x: auto;
     background: #f8f8f8;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
+    max-width: 600px;
 }
 
 /* Каждая история */
@@ -15,7 +15,7 @@
     height: 60px;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid #ff7f7f; /* 🔥 светло-красный */
+    border: 2px solid #ff0000; /* 🔥 красный */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -49,6 +49,13 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
 }
 
 /* Прогресс-бар */
@@ -72,7 +79,7 @@
 .progress-fill {
     height: 100%;
     width: 0;
-    background: #ffcc00;
+    background: #ffffff; /* 🔥 белый */
     transition: width 0.1s linear;
 }
 
