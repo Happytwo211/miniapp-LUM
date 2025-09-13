@@ -6,6 +6,7 @@
     <title>LUM</title>
 
     <link rel="stylesheet" href="{% static 'miniapp/css/stories.css' %}">
+    <link rel="stylesheet" href="{% static 'miniapp/css/default.css' %}">
 </head>
 <body>
 
@@ -47,6 +48,25 @@
 {% block tours_list %}{% endblock %}
 {% block tour_detail %}{% endblock %}
 {% block drop_down %}{% endblock %}
+
+<!-- 🔥 Нижняя панель навигации -->
+<div class="bottom-nav">
+    <a href="{% url 'tour-list' %}" class="nav-item">
+        <div class="nav-icon">
+            <!-- SVG иконка: метка - пунктир - метка -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="5" cy="5" r="3"></circle>
+                <circle cx="19" cy="19" r="3"></circle>
+                <path d="M8 8 C12 12, 12 12, 16 16" stroke-dasharray="3 3"></path>
+            </svg>
+        </div>
+        <div class="nav-label">Экскурсии</div>
+    </a>
+    <a href="{% url 'profile' user.pk %}" class="nav-item">
+        <div class="nav-icon">👤</div>
+        <div class="nav-label">Профиль</div>
+    </a>
+</div>
 
 <script src="{% static 'miniapp/js/stories.js' %}"></script>
 </body>

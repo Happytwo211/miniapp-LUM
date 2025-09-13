@@ -26,3 +26,8 @@ class TourDropDownElementsListView(ListView):
     ordering = 'element_created_at'
     context_object_name = 'drop_down_el'
     template_name = 'tours_list.html'
+
+class ProfieDetail(DetailView):
+    model = Profile
+    context_object_name = 'profile'
+    template_name = 'profile.html'

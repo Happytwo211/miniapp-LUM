@@ -13,6 +13,10 @@ function openStory(index) {
     modal.classList.add("show");
     renderProgressBars();
     showStory(currentIndex);
+
+    // 🔥 Скрыть нижнюю панель
+    const bottomNav = document.querySelector(".bottom-nav");
+    if (bottomNav) bottomNav.style.display = "none";
 }
 
 // Закрыть сторис
@@ -33,6 +37,10 @@ function closeStory() {
     modal.classList.remove("show");
     modalContent.innerHTML = "";
     document.getElementById("progressContainer").innerHTML = "";
+
+    // 🔥 Показать нижнюю панель
+    const bottomNav = document.querySelector(".bottom-nav");
+    if (bottomNav) bottomNav.style.display = "flex";
 }
 
 // Показать текущий сторис
