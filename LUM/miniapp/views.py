@@ -1,6 +1,9 @@
+from django.http import JsonResponse
 from django.urls import reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, UpdateView
 from .models import *
+import json
 
 
 class TourList(ListView):
@@ -40,3 +43,21 @@ class ProfileUpdate(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('profile', kwargs={'pk': self.object.pk})
+
+@csrf_exempt
+def update_profile(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+        user_id = data.get("user_id")
+        username = data.get("username")
+
+        user, created = User.objects.get_or_create(username=username or f"user_{user_id}")
+        profile = user.profile
+        profile.first_name = data.get("first_name", "")
+        profile.last_name = data.get("last_name", "")
+        profile.avatar_url = data.get("avatar_url", "")
+        profile.phone_number = data.get("phone_number", "")
+        profile.save()
+
+        return JsonResponse({"status": "ok"})
+    return JsonResponse({"status": "error"}, status=400)

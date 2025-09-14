@@ -12,10 +12,13 @@ class Profile(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='profile',
-        verbose_name='Пользователь')
+        verbose_name='Пользователь'
+    )
     first_name = models.CharField(max_length=30, verbose_name='Имя', blank=True)
     last_name = models.CharField(max_length=30, verbose_name='Фамилия', blank=True)
     phone_number = models.CharField(max_length=15, verbose_name='Номер телефона', blank=True)
+    avatar_url = models.URLField(verbose_name="Аватар (из Telegram)", blank=True, null=True)
+
 
     class Meta:
         verbose_name = 'Профиль'
@@ -24,14 +27,14 @@ class Profile(models.Model):
     def __str__(self):
         return f'Профиль {self.user.username} ({self.last_name})'
 
-    @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
 
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.profile.save()
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
 
 class Tour(models.Model):
 

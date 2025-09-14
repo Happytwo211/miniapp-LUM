@@ -83,14 +83,21 @@
     overflow: hidden;
 }
 
+/* 🔥 Изменила шапку элемента */
 .tour-element-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 16px 20px;
     cursor: pointer;
+    background: #fff; /* белый фон */
+    border: 1px solid #000; /* чёрный контур */
+    border-radius: 12px; /* закруглённые углы */
+    transition: background 0.2s ease;
+}
+
+.tour-element-header:hover {
     background: #fafafa;
-    border-bottom: 1px solid #eee;
 }
 
 .tour-element-icon {

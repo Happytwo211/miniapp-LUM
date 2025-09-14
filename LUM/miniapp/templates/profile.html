@@ -5,60 +5,30 @@
 <link rel="stylesheet" href="{% static 'miniapp/css/profile.css' %}">
 
 <div class="profile-container">
-    <!-- Фото пользователя -->
+    <!-- 🔙 Кнопка назад (только иконка) -->
+    <a href="{% url 'tour-list' %}" class="back-button">←</a>
+
+    <!-- 🖼️ Аватар -->
     <div class="profile-avatar">
-        <img id="tg-avatar" src="{% static 'miniapp/img/avatar-placeholder.png' %}" alt="Аватар">
+        {% if profile.avatar_url %}
+            <img src="{{ profile.avatar_url }}" alt="Аватар {{ profile.user.username }}">
+        {% else %}
+            <div class="avatar-placeholder">👤</div>
+        {% endif %}
     </div>
 
-    <!-- Имя -->
-    <h2 id="tg-name">Имя пользователя</h2>
+    <!-- 📋 Информация -->
+    <div class="profile-info">
+        <h1 class="profile-name">
+            {{ profile.first_name }} {{ profile.last_name }}
+        </h1>
+        <p class="profile-username">@{{ profile.user.username }}</p>
 
-    <!-- Username -->
-    <p id="tg-username">@username</p>
-
-    <!-- Телефон -->
-    {% if profile.phone_number %}
-        <p id="tg-phone">Телефон: {{ profile.phone_number }}</p>
-    {% else %}
-        <p id="tg-phone">Телефон: не указан</p>
-        <button id="add-phone-btn" class="btn">Добавить номер</button>
-    {% endif %}
+        {% if profile.phone_number %}
+            <p class="profile-phone">📞 {{ profile.phone_number }}</p>
+        {% else %}
+            <p class="profile-phone empty">Телефон не указан</p>
+        {% endif %}
+    </div>
 </div>
-
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script>
-    // Берём данные из Telegram WebApp
-    const tg = window.Telegram.WebApp;
-    const user = tg.initDataUnsafe.user;
-
-    if (user) {
-        // Имя
-        document.getElementById("tg-name").innerText =
-            (user.first_name || "") + " " + (user.last_name || "");
-
-        // username
-        if (user.username) {
-            document.getElementById("tg-username").innerText = "@" + user.username;
-        }
-
-        // аватарка
-        if (user.photo_url) {
-            document.getElementById("tg-avatar").src = user.photo_url;
-        }
-    }
-
-    // Если у пользователя нет телефона
-    const addPhoneBtn = document.getElementById("add-phone-btn");
-    if (addPhoneBtn) {
-        addPhoneBtn.addEventListener("click", () => {
-            tg.MainButton.text = "Поделиться номером";
-            tg.MainButton.show();
-
-            tg.MainButton.onClick(() => {
-                // 🔥 Отправляем команду в бота
-                tg.sendData(JSON.stringify({ action: "request_phone" }));
-            });
-        });
-    }
-</script>
 {% endblock %}
