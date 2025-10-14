@@ -1,0 +1,34 @@
+{% extends "default.html" %}
+{% load static %}
+
+{% block quiz %}
+<link rel="stylesheet" href="{% static 'miniapp/css/quiz.css' %}">
+
+<div class="quiz-result-container">
+    <!-- Кнопка назад -->
+    <a href="{% url 'quiz_detail' result.quiz.pk %}" class="back-button">←</a>
+
+    <!-- Заголовок -->
+    <h1 class="quiz-result-title">Результат квиза</h1>
+    <p class="quiz-result-quizname">{{ result.quiz.quiz_name }}</p>
+
+    <!-- Баллы -->
+    <div class="quiz-score">
+        <span class="score">{{ result.score }}</span>
+        <span class="divider">/</span>
+        <span class="total">{{ result.total_questions }}</span>
+    </div>
+
+    <p class="quiz-score-text">
+        Вы ответили правильно на
+        <strong>{{ result.score }}</strong>
+        из <strong>{{ result.total_questions }}</strong> вопросов 🎉
+    </p>
+
+    <!-- Кнопки -->
+    <div class="quiz-actions">
+        <a href="{% url 'quiz_detail' result.quiz.pk %}" class="btn retry-btn">Пройти снова</a>
+        <a href="{% url 'tour-list' %}" class="btn home-btn">На главную</a>
+    </div>
+</div>
+{% endblock %}

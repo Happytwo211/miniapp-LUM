@@ -1,9 +1,12 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, UpdateView
 from .models import *
 import json
+
 
 
 class TourList(ListView):
@@ -43,6 +46,97 @@ class ProfileUpdate(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('profile', kwargs={'pk': self.object.pk})
+
+
+class SaveQuizResult(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body.decode("utf-8"))
+        quiz_id = data.get("quiz_id")
+        score = data.get("score")
+        total_questions = data.get("total_questions")
+
+        if not request.user.is_authenticated:
+            return JsonResponse({"error": "Необходима авторизация"}, status=403)
+
+        quiz = Quiz.objects.get(id=quiz_id)
+        result = QuizResult.objects.create(
+            user=request.user,
+            quiz=quiz,
+            score=score,
+            total_questions=total_questions,
+        )
+
+        return JsonResponse({"message": "Результат сохранён", "result_id": result.id})
+
+
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import DetailView, View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+
+from .models import Quiz, QuizResult, Question, AnswerOption
+
+
+# ======= Страница квиза =======
+class QuizDetail(LoginRequiredMixin, DetailView):
+    model = Quiz
+    template_name = "quiz.html"
+    context_object_name = "quiz"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        # загружаем вопросы + варианты ответов
+        ctx["questions"] = self.object.questions.prefetch_related("answer_options")
+        return ctx
+
+
+# ======= Обработка ответов =======
+class QuizSubmit(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        quiz = get_object_or_404(Quiz, pk=pk)
+        questions = quiz.questions.prefetch_related("answer_options")
+
+        score = 0
+        total = questions.count()
+
+        for question in questions:
+            # имя input в шаблоне = "question_<id>"
+            answer_id = request.POST.get(f"question_{question.id}")
+            if not answer_id:
+                continue  # вопрос пропущен
+
+            try:
+                answer = AnswerOption.objects.get(pk=answer_id, question=question)
+                if answer.is_correct:
+                    score += 1
+            except AnswerOption.DoesNotExist:
+                pass
+
+        # сохраняем результат
+        result = QuizResult.objects.create(
+            user=request.user,
+            quiz=quiz,
+            score=score,
+            total_questions=total,
+        )
+
+        messages.success(
+            request,
+            f"Ваш результат: {score} из {total}"
+        )
+        return redirect("quiz_result", pk=result.pk)
+
+
+# ======= Результат квиза =======
+class QuizResultDetail(LoginRequiredMixin, DetailView):
+    model = QuizResult
+    template_name = "quiz_result.html"
+    context_object_name = "result"
+
 
 @csrf_exempt
 def update_profile(request):
